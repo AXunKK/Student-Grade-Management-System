@@ -1,0 +1,58 @@
+# Project: Project1.2
+# Makefile created by Red Panda C++ 3.3.3147
+
+CXX      = "g++.exe"
+CC       = "gcc.exe"
+WINDRES  = "windres.exe"
+RM       = del /q /f
+CD       = cd /d
+LIBS     = "-Wl,--stack,12582912"
+INCS     = 
+CXXINCS  = 
+CXXFLAGS = $(CXXINCS) "-g3" "-pipe" "-Wall" "-D_DEBUG"
+CFLAGS   = $(INCS) "-g3" "-pipe" "-Wall" "-D_DEBUG"
+WINDRESFLAGS = 
+RES      = Project1_private.res
+OBJ      = StudentWork.o StudentController.o main.o CourseController.o ScoreWork.o ExpandController.o ScoreController.o CourseWork.o $(RES)
+BIN      = Project1.2.exe
+LINKOBJ  = "StudentWork.o" "StudentController.o" "main.o" "CourseController.o" "ScoreWork.o" "ExpandController.o" "ScoreController.o" "CourseWork.o" "Project1_private.res"
+CLEANOBJ = "StudentWork.o" "StudentController.o" "main.o" "CourseController.o" "ScoreWork.o" "ExpandController.o" "ScoreController.o" "CourseWork.o" "Project1_private.res" "Project1.2.exe"
+
+.PHONY: all all-before all-after clean clean-custom
+
+all: all-before $(BIN) all-after
+
+clean: clean-custom
+	-$(RM) $(CLEANOBJ) >NUL 2>&1
+
+Project1.2.exe: $(OBJ)
+
+	$(CXX) $(LINKOBJ) -o "Project1.2.exe" $(LIBS)
+
+StudentWork.o: StudentWork.cpp ScoreWork.h StudentWork.h DataType.h
+	$(CXX) -c "StudentWork.cpp" -o "StudentWork.o" $(CXXFLAGS)  -finput-charset=UTF-8 -fexec-charset=gbk
+
+StudentController.o: StudentController.cpp ScoreWork.h StudentWork.h StudentController.h DataType.h
+	$(CXX) -c "StudentController.cpp" -o "StudentController.o" $(CXXFLAGS)  -finput-charset=UTF-8 -fexec-charset=gbk
+
+main.o: main.cpp CourseWork.h ScoreWork.h StudentWork.h CourseController.h StudentController.h DataType.h ScoreController.h
+	$(CXX) -c "main.cpp" -o "main.o" $(CXXFLAGS)  -finput-charset=UTF-8 -fexec-charset=gbk
+
+CourseController.o: CourseController.cpp CourseWork.h CourseController.h DataType.h
+	$(CXX) -c "CourseController.cpp" -o "CourseController.o" $(CXXFLAGS)  -finput-charset=UTF-8 -fexec-charset=gbk
+
+ScoreWork.o: ScoreWork.cpp CourseWork.h ScoreWork.h StudentWork.h CourseController.h StudentController.h DataType.h
+	$(CXX) -c "ScoreWork.cpp" -o "ScoreWork.o" $(CXXFLAGS)  -finput-charset=UTF-8 -fexec-charset=gbk
+
+ExpandController.o: ExpandController.cpp CourseWork.h ScoreWork.h StudentWork.h DataType.h
+	$(CXX) -c "ExpandController.cpp" -o "ExpandController.o" $(CXXFLAGS)  -finput-charset=UTF-8 -fexec-charset=gbk
+
+ScoreController.o: ScoreController.cpp CourseWork.h ScoreWork.h StudentWork.h DataType.h ScoreController.h
+	$(CXX) -c "ScoreController.cpp" -o "ScoreController.o" $(CXXFLAGS)  -finput-charset=UTF-8 -fexec-charset=gbk
+
+CourseWork.o: CourseWork.cpp CourseWork.h DataType.h
+	$(CXX) -c "CourseWork.cpp" -o "CourseWork.o" $(CXXFLAGS)  -finput-charset=UTF-8 -fexec-charset=gbk
+
+Project1_private.res: Project1_private.rc 
+	$(WINDRES) -i "Project1_private.rc" --input-format=rc -o "Project1_private.res" -O coff $(WINDRESFLAGS) 
+
